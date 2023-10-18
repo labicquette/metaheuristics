@@ -8,5 +8,6 @@ include("setSPP.jl")
 include("getfname.jl")
 include("eval.jl")
 include("solvers.jl")
+include("parserRAIL.jl")
 
-eval("./bigdata/", 5)
+eval("./bigdata/", 1)

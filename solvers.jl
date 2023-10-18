@@ -8,6 +8,7 @@ end
 
 function optimiz(C, A)
     sorted = construct(C,A) #Construction Heuristic
+    println(A)
     lenA, _ = size(A)
     temp = zeros(Int64, lenA)
     #temp = A[:, popped]
