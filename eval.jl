@@ -11,6 +11,7 @@ function eval(dir, nbRuns)
     time_runs = zeros(length(files))
     xbest = zeros(length(files))
     x0 = zeros(length(files))
+    
     for i in 1:length(files)
         C, A = loadSPP(string(dir,files[i]))
         nbvar, nb, C, A = loadInstanceRAIL(string("./rail582"))
