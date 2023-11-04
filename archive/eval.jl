@@ -1,13 +1,12 @@
-function eval(dir, nbRuns)
+function eval(opti, dir, nbRuns)
     files = getfname(dir)
-    C, A = loadSPP(string("./Data/didactic.dat"))
+    C, A = loadSPP(string("./test/didactic.dat"))
     
     s = sum(A, dims=1)
     C = reshape(C,  1, length(C))
     v = C ./ s
     sorted = sortperm(v, dims = 2, rev=true)
-    x0, res = optimiz(C, A)
-    x0, res = optimiz(C, A)
+    x0, res = naiveOpti(C, A)
     time_runs = zeros(length(files))
     xbest = zeros(length(files))
     x0 = zeros(length(files))
@@ -22,7 +21,7 @@ function eval(dir, nbRuns)
         temp_time = 0
         for j in 1:nbRuns
             start = time()
-            @time x0, xbest, res = optimiz(C, A)
+            @time x0, xbest, res = opti(C, A)
             println("x0 : ",x0, ", xbest: ",xbest)
             temp_time += (time() - start)
             #if(j==1)

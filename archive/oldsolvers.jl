@@ -68,7 +68,7 @@ function rec_opt(adm::Bool, A::Matrix{Int64}, temp::Vector{Int64}, index::Int64)
         end
     end
     #temp .+= A[:, index]
-    temp .+= view(A, :, index)
+    temp .+= @view(A, :, index)
     #println(A[:, index])
     #println(A[:, index] == view(A, :, index))
     return true, temp
