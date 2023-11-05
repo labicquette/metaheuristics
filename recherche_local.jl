@@ -7,6 +7,7 @@ exchange(x, z, C_data, A_data) = begin
     xCurr = copy(x)
     zCurr = z
 
+    bests = []
     # meilleure solution
     xBest = copy(x)
     zBest = z
@@ -44,6 +45,7 @@ exchange(x, z, C_data, A_data) = begin
                         j10aBest = j10a
                         j10bBest = j10b
                         zBest = zCurr - C[j10aBest] - C[j10bBest] + C[j01Best]
+                        push!(bests, bests)
                         succes = true
                     end
                 end
@@ -103,5 +105,5 @@ exchange(x, z, C_data, A_data) = begin
         end
     end
 
-    return xBest, zBest
+    return xBest, zBest, bests
 end

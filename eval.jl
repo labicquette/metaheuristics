@@ -11,7 +11,7 @@ function eval_naive(C, A, ncolonnes, nbruns)
         start = time()
         x, z = solution_initial(C, A, ncolonnes)
         t_construct = time()
-        x, z = exchange(x, z, C, A)
+        x, z, bests = exchange(x, z, C, A)
         t_opti = time()
         times_construct[i] = t_construct - start
         times_opti[i] =  t_opti - t_construct
