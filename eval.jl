@@ -25,7 +25,7 @@ function eval_naive(C, A, ncolonnes, nbruns, alpha)
     end
 
     
-    plot_naive(a_cons_bests, a_opti_bests)
+    # plot_naive(a_cons_bests, a_opti_bests)
     moy_const = sum(times_construct)/nbruns
     moy_opti = sum(times_opti)/nbruns
     moy_tot = sum(times_tot)/nbruns
@@ -34,7 +34,7 @@ function eval_naive(C, A, ncolonnes, nbruns, alpha)
     var_opti = var(times_opti)
 
     println("Nombre de runs : ", nbruns)
-    println("Taille de l'instance : ")
+    println("Taille de l'instance : ", size(A))
     println()
     @printf("Variance Construction = %fs\n", var_cons)
     @printf("Variance Optimisation = %fs\n", var_opti)
