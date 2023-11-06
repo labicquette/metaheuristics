@@ -15,7 +15,7 @@ lin_init, col_init = size(A_init)
 
 alpha = 0.5
 
-# eval_naive(C_init, A_init, col_init, 5, alpha)
+eval_naive(C_init, A_init, col_init, 5, alpha)
 """
 @show C_data
 @show A_data
