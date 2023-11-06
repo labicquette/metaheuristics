@@ -1,3 +1,4 @@
+include("plots.jl")
 function eval(opti, dir, nbRuns)
     files = getfname(dir)
     C, A = loadSPP(string("./test/didactic.dat"))
@@ -36,7 +37,7 @@ function eval(opti, dir, nbRuns)
     println(time_runs)
     #plotCPUt(files, time_runs)
     #plotRunNaive(files, x0, zbest, zbest)
-
-
 end 
+
+
 

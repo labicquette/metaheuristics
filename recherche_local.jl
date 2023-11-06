@@ -45,7 +45,7 @@ exchange(x, z, C_data, A_data) = begin
                         j10aBest = j10a
                         j10bBest = j10b
                         zBest = zCurr - C[j10aBest] - C[j10bBest] + C[j01Best]
-                        push!(bests, bests)
+                        push!(bests, zBest)
                         succes = true
                     end
                 end
@@ -86,6 +86,7 @@ exchange(x, z, C_data, A_data) = begin
                     j01Best = j01
                     j10Best = j10
                     zBest = zCurr - C[j10Best] + C[j01Best]
+                    push!(bests, zBest)
                     succes = true
                 end
             end

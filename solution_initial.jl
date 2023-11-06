@@ -1,4 +1,6 @@
 solution_initial(C, A, ncolonnes) = begin
+    bests = []
+
     # valeur de la solution
     z = 0
 
@@ -74,7 +76,8 @@ solution_initial(C, A, ncolonnes) = begin
             end
         end
         A = A[setdiff(1:end, contraintesConcernees), :]
+        push!(bests, z)
     end
 
-    return x, z
+    return x, z, bests
 end
