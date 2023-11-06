@@ -71,12 +71,12 @@ solution_initial(C, A, ncolonnes, alpha = 0.5) = begin
         x[posVar[j_select]] = 1
         z = z + C[j_select]
 
-        println("ivar     : ", posVar)
-        println("C        : ", C)
-        #println("A        : ", A)
-        println("U        : ", utilite)
-        println("j_select : ", j_select)
-        println("-----------")
+        # println("ivar     : ", posVar)
+        # println("C        : ", C)
+        # println("A        : ", A)
+        # println("U        : ", utilite)
+        # println("j_select : ", j_select)
+        # println("-----------")
 
         # ----- Elimine toutes les variables fixee et reduit l'instance en nombre de colonnes -----
 
@@ -110,8 +110,6 @@ solution_initial(C, A, ncolonnes, alpha = 0.5) = begin
         A = A[setdiff(1:end, contraintesConcernees), :]
         push!(bests, z)
     end
-
-    println("z(init) = ", z)
 
     println("z(init) = ", z)
 

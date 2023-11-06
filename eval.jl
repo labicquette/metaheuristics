@@ -75,7 +75,7 @@ function eval_naive(C, A, ncolonnes, nbruns)
     var_opti = var(times_opti)
 
     println("Nombre de runs : ", nbruns)
-    println("Taille de l'instance : ")
+    println("Taille de l'instance : ", size(A))
     println()
     @printf("Variance Construction = %fs\n", var_cons)
     @printf("Variance Optimisation = %fs\n", var_opti)
