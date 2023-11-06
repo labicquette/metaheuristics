@@ -4,7 +4,7 @@ include("plots.jl")
 
 using Statistics
 
-function eval_naive(C, A, ncolonnes, nbruns)
+function eval_naive(C, A, ncolonnes, nbruns, alpha)
     times_construct = zeros(Float64, nbruns)
     times_opti = zeros(Float64, nbruns)
     times_tot = zeros(Float64, nbruns)
@@ -13,7 +13,7 @@ function eval_naive(C, A, ncolonnes, nbruns)
 
     for i in 1:nbruns
         start = time()
-        x, z, cons_bests = solution_initial(C, A, ncolonnes)
+        x, z, cons_bests = solution_initial(C, A, ncolonnes, alpha)
         push!(a_cons_bests, [cons_bests])
         t_construct = time()
         x, z, opti_bests = exchange(x, z, C, A)
