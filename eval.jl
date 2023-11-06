@@ -3,13 +3,13 @@ include("recherche_local.jl")
 
 using Statistics
 
-function eval_naive(C, A, ncolonnes, nbruns)
+function eval_naive(C, A, ncolonnes, nbruns, alpha)
     times_construct = zeros(Float64, nbruns)
     times_opti = zeros(Float64, nbruns)
     times_tot = zeros(Float64, nbruns)
     for i in 1:nbruns
         start = time()
-        x, z = solution_initial(C, A, ncolonnes)
+        x, z = solution_initial(C, A, ncolonnes, alpha)
         t_construct = time()
         x, z, bests = exchange(x, z, C, A)
         t_opti = time()

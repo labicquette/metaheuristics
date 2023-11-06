@@ -8,13 +8,15 @@ include("recherche_local.jl")
 include("eval.jl")
 
 
-C_data, A_data = loadSPP("alldata/pb_1000rnd0100.dat")
+C_data, A_data = loadSPP("alldata/pb_100rnd0100.dat")
 nlignes, ncolonnes = size(A_data)
 
 C_init, A_init= loadSPP("alldata/didactic.dat")
 lin_init, col_init = size(A_init)
 
-eval_naive(C_init, A_init, col_init, 5)
+alpha = 0.5
+
+# eval_naive(C_init, A_init, col_init, 5, alpha)
 """
 @show C_data
 @show A_data
@@ -40,4 +42,4 @@ x, z = exchange(x, z, C, A)
 
 """
 
-@time eval_naive(C, A, ncolonnes, 5)
+@time eval_naive(C, A, ncolonnes, 5, alpha)
