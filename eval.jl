@@ -18,12 +18,13 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     temp_all_z = []
     temp_all_zCons = []
     temp_bests = []
-    elite = []
+    
     z_init = []
     z_opti = []
     val_path = []
 
     for i in 1:nbruns
+        elite = []
         temp_all_z = []
         temp_all_zCons = []
         temp_bests = []
@@ -68,7 +69,8 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                 # println("Random elite : ", rand_elite)
     
                 #println("EQUAL   ", rand_elite == Best_elite)
-                solution, val = path_relinking(rand_elite, Best_elite, 5, C, A, rhsCurr)
+                solution, val = path_relinking(rand_elite, Best_elite, elite, temp_bests, C, A, rhsCurr)
+                println(val)
                 push!(val_path, copy(val))
                 if val > best_res
                     best_x = copy(solution)
@@ -111,7 +113,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         @printf("Temps Total        = %.5fs\n", moy_tot)
 
         println("Best Result : ", best_res)
-        plot_grasp(z_init, z_opti)
+        #plot_grasp(z_init, z_opti)
         plot_path_relinking(val_path)
     end
     

@@ -3,19 +3,20 @@ include("solution_initial.jl")
 
 using Random
 
-function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
+function path_relinking(solution1, solution2, elite, bests_z, C, A, rhsCurr)
     solutionActuel = copy(solution1)
     solutionOpti = copy(solution2)
     currentSol = copy(solution1)
     solOptNb = sum(C .* solutionOpti)
     currSum = solOptNb
     localRhs = copy(rhsCurr)
-    elite = []
     #println("SOLUT ACTUEL ", solutionActuel)
     #println("SOLUT OPTI   ", solutionOpti)
     #println("DIFF   ", solutionActuel != solutionOpti)
     # tant que la solution de depart n'est pas egale a la solution d'arrivee
     #path relinking : These X.Delorme
+    bestSol = solutionOpti
+    bestSolNb = solOptNb
     
     for i in 1:length(solutionActuel)
         if solutionActuel[i] != solutionOpti[i]
@@ -36,21 +37,17 @@ function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
                         #println("1 : CurSum ", currSum, "  " ,solOptNb)
                         currentSol, currSum, optiBest = exchange(currentSol, currSum, C, A)
                         #println("2 : CurSum ", currSum, "  " ,solOptNb)
-                        push!(elite, (copy(currentSol),currSum))
+                        bestSol = copy(currentSol)
+                        bestSolNb = currSum
+                        push!(elite, copy(currentSol))
+                        push!(bests_z, copy(currSum))
                     end
                 end
             end
         end
     end
-    maxe = 0
-    elit = nothing
-    for e in elite
-        if e[2] > maxe
-            maxe = e[2]
-            elit = e[1]
-        end
-    end
-    return elit, maxe
+    
+    return bestSol, bestSolNb
 end
 
 function construction_voisins(solutionActuel, solutionOpti, A, rhsCurr)
