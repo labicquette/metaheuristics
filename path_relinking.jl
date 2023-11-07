@@ -30,9 +30,9 @@ function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
                 if !in(currentSol, elite) 
                     currSum = sum(C .* currentSol)
                     if currSum > solOptNb
-                        println("1 : CurSum ", currSum, "  " ,solOptNb)
+                        # println("1 : CurSum ", currSum, "  " ,solOptNb)
                         currentSol, currSum, optiBest = exchange(currentSol, currSum, C, A)
-                        println("2 : CurSum ", currSum, "  " ,solOptNb)
+                        # println("2 : CurSum ", currSum, "  " ,solOptNb)
                         push!(elite, copy(currentSol))
                     end
                 end
