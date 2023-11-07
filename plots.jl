@@ -25,7 +25,7 @@ function plot_grasp(zinit, zamelio)
 
     xlabel("Nombre d'itérations")
     ylabel("Valeur de z(x)")
-    title("Évolution de z(x) au fil des itérations")
+    title("Évolution de z(x) au fil des itérations de GRASP")
     legend()
     
     # Affichez le graphique de manière interactive dans le REPL Julia
@@ -39,7 +39,7 @@ function plot_path_relinking(val)
 
     xlabel("Nombre d'itérations")
     ylabel("Valeur de z(x)")
-    title("Évolution de z(x) au fil des itérations")
+    title("Évolution de z(x) au fil des itérations avec Path-Relinking")
     legend()
     
     # Affichez le graphique de manière interactive dans le REPL Julia

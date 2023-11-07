@@ -21,6 +21,7 @@ Ce projet nécessite Julia (version 1.9) ainsi que les packages suivants :
 GLPK (version >= 1.1.3)  
 PyPlot (version >= 2.11.2)  
 JuMP (version >= 1.16.0)  
+Plots (version >= 1.39.0)  
 
 Installez les dépendances en utilisant le gestionnaire de paquets de Julia :  
   
@@ -30,7 +31,8 @@ using Pkg
 Pkg.add("GLPK")  
 Pkg.add("PyPlot")  
 Pkg.add("JuMP")  
-Pkg.add("Distributions")  
+Pkg.add("Distributions")
+Pkg.add("Plots")  
 
 ## Utilisation
 Pour exécuter l'algorithme GRASP avec un composant additionnel spécifique, utilisez la commande suivante :  
