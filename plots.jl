@@ -3,9 +3,9 @@ using PyPlot
 
 function plot_naive(zinit, zamelio)
     iteractions = 1:length(zamelio)
-    scatter(iteractions, zamelio, color="b", markersize=5, label="Valeurs de z(x) amelioré")
-    scatter(iteractions, zinit, color="r", markersize=5, label="Valeurs de z(x) contruit")
-    plot([1, length(zamelio)], [maximum(zamelio), maximum(zamelio)], color="g", label="Valeur de z(x) optimale")
+    scatter(iteractions, zamelio, color="b", s=5, label="Valeurs de z(x) amelioré")
+    scatter(iteractions, zinit, color="r", s=5, label="Valeurs de z(x) contruit")
+    plot([1, length(zamelio)], [maximum(zamelio), maximum(zamelio)], color="g", markersize=5, label="Valeur de z(x) optimale")
 
     xlabel("Nombre d'itérations")
     ylabel("Valeur de z(x)")
@@ -19,9 +19,9 @@ end
 
 function plot_grasp(zinit, zamelio)
     iteractions = 1:length(zamelio)
-    scatter(iteractions, zamelio, color="b", markersize=5, label="Valeurs de z(x) amelioré")
-    scatter(iteractions, zinit, color="r", markersize=5, label="Valeurs de z(x) contruit")
-    plot([1, length(zamelio)], [maximum(zamelio), maximum(zamelio)], color="g", label="Valeur de z(x) optimale")
+    scatter(iteractions, zamelio, color="b", s=5, label="Valeurs de z(x) amelioré")
+    scatter(iteractions, zinit, color="r", s=5, label="Valeurs de z(x) contruit")
+    plot([1, length(zamelio)], [maximum(zamelio), maximum(zamelio)], color="g", markersize=5, label="Valeur de z(x) optimale")
 
     xlabel("Nombre d'itérations")
     ylabel("Valeur de z(x)")
@@ -34,8 +34,8 @@ end
 
 function plot_path_relinking(val)
     iteractions = 1:length(val)
-    scatter(iteractions, val, color="b", markersize=5, label="Valeurs de z(x)")
-    plot([1, length(val)], [maximum(val), maximum(val)], color="g", label="Valeur de z(x)")
+    scatter(iteractions, val, color="b", s=5, label="Valeurs de z(x)")
+    plot([1, length(val)], [maximum(val), maximum(val)], color="g", markersize=5, label="Valeur de z(x)")
 
     xlabel("Nombre d'itérations")
     ylabel("Valeur de z(x)")
