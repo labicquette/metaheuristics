@@ -21,6 +21,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     elite = []
     z_init = []
     z_opti = []
+    val_path = []
 
     for i in 1:nbruns
         temp_all_z = []
@@ -68,8 +69,15 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     
                 #println("EQUAL   ", rand_elite == Best_elite)
                 solution, val = path_relinking(rand_elite, Best_elite, 5, C, A, rhsCurr)
+                push!(val_path, copy(val))
+                if val > best_res
+                    best_x = copy(solution)
+                    best_res = val
+                    println("New Best Path Relinking", val)
+                end
                 #println("Solution : ", solution)
-                println("Val : ", val)
+                #println("Val : ", val)
+                #println("best res ", best_res)
             end
 
             times_construct[i] = t_construct - start
@@ -107,6 +115,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
 
         println("Best Result : ", best_res)
         plot_grasp(z_init, z_opti)
+        plot_path_relinking(val_path)
     end
     
 end
