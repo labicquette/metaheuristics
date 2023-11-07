@@ -73,7 +73,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                 if val > best_res
                     best_x = copy(solution)
                     best_res = val
-                    println("New Best Path Relinking", val)
+                    println("New Best Path Relinking ", val)
                 end
                 #println("Solution : ", solution)
                 #println("Val : ", val)
@@ -86,9 +86,6 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         end
 
         # selectionne le meilleur resultat de la run si elite > 1
-        
-
-        best_res = 0
         best_x = zeros(ncolonnes)
         push!(all_z, [temp_all_z])
         push!(all_zCons, [temp_all_zCons])
