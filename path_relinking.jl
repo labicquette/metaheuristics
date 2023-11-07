@@ -1,61 +1,85 @@
-function path_relinking(solution1, solution2, nbvoisins, C)
+include("recherche_local.jl")
+
+using Random
+
+function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
     solutionActuel = copy(solution1)
     solutionOpti = copy(solution2)
+    elite = []
+    println("SOLUT ACTUEL ", solutionActuel)
+    println("SOLUT OPTI   ", solutionOpti)
+    println("DIFF   ", solutionActuel != solutionOpti)
     # tant que la solution de depart n'est pas egale a la solution d'arrivee
-    i = 0
-    while ((solutionActuel != solutionOpti) || (i == 20))
+    while solutionActuel != solutionOpti
         # genere les voisins de la solution de depart
         voisins = []
-        for i in 1:nbvoisins
-            SolutionModifiee = construction_voisins(solutionActuel)
-            if SolutionModifiee != solutionActuel && !in(SolutionModifiee, voisins)
+        i = 0
+        while i < nbvoisins
+            SolutionModifiee = construction_voisins(solutionActuel, solutionOpti, A, rhsCurr)
+            if (SolutionModifiee != solutionActuel) && (!in(SolutionModifiee, voisins))
                 push!(voisins, SolutionModifiee)
-                i+=1
+                i += 1
             end
         end
-        println("SIZE voisins : ", length(voisins))
+        # println("SIZE voisins : ", length(voisins))
+
         # selectionne le meilleur voisin
         solutionActuel = best_voisin(voisins, C)
 
         if solutionActuel > solutionOpti
-            break
+            println("Meilleur trouvee ")
+            # x, z, best = exchange(copy(solutionActuel), valeur(solutionActuel, C), C, A)
+            # if !in(x, elite)
+            #     push!(elite, copy(x))
+            # end
+            println("end recherche local du path")
         end
+        println("SOLUT ACTUEL ", valeur(solutionActuel, C))
     end
 
-    return solutionActuel, eval(solutionActuel, C)
+    return solutionActuel, valeur(solutionActuel, C)
 end
 
-function construction_voisins(solutionActuel)
+function construction_voisins(solutionActuel, solutionOpti, A, rhsCurr)
     solution = copy(solutionActuel)
-    # choisis 2 indices de la solution
-    indices = randperm(length(solution))
-    # echange les valeurs correspondantes
-    solution[indices[1]], solution[indices[2]] = solution[indices[2]], solution[indices[1]]
+    solopti = copy(solutionOpti)
+
+    while (true) && (solution != solopti)
+        rand = Random.rand(1:length(solution))
+        #repair
+        # if (solution[rand] != solopti[rand]) && (findfirst(x -> x>1, rhsCurr - A[:, rand] + A[:, ]) == nothing)
+        #     solution[rand] = solopti[rand]
+        #     break
+        # end
+    end
     # renvoie la solution modifiee
     return solution    
 end
 
 function best_voisin(voisins, C)
     # initialise la meilleure solution
-    best = voisins[1]
+    best = copy(voisins[1])
     # initialise la meilleure valeur
-    bestVal = eval(best, C)
+    bestVal = valeur(best, C)
     # pour chaque voisin
     for voisin in voisins
         # si la valeur du voisin est meilleure que la meilleure valeur
-        if eval(voisin, C) > bestVal
+        # println("BEST   ", bestVal)
+        # println("VOISIN ", valeur(voisin, C))
+        if valeur(voisin, C) > bestVal
             # la meilleure valeur devient la valeur du voisin
-            bestVal = eval(voisin)
+            bestVal = valeur(voisin, C)
             # la meilleure solution devient le voisin
-            best = voisin
+            best = copy(voisin)
         end
     end
+    # println("BEST   ", bestVal)
+    # println("------------------")
     # renvoie la meilleure solution
-    return best
-    
+    return best    
 end
 
-function eval(solution, C)
+function valeur(solution, C)
     # initialise la valeur de la solution
     val = 0
     # pour chaque element de la solution

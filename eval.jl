@@ -25,6 +25,8 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         temp_all_zCons = []
         temp_bests = []
 
+        rhsCurr = nothing
+
         @time for _ in 1:IterGrasp
             start = time()
             x, z = solution_initial_grasp(C, A, ncolonnes, alpha)
@@ -37,14 +39,15 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                     println("New Best result : ", best_res)
                 end
             end
-            x, z = exchange(x, z, C, A)
+            x, z, Best, rhsCurr = exchange(x, z, C, A)
             push!(temp_all_z, z)
             t_opti = time()
             if z > best_res
                 best_res = z
                 best_x = copy(x)
                 push!(temp_bests, z)
-                push!(elite, (best_x, best_res))
+
+                push!(elite, copy(best_x))
                 if verbose 
                     println("New Best result : ", best_res)
                 end
@@ -57,21 +60,20 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
 
         # selectionne le meilleur resultat de la run si elite > 1
         if length(elite) > 1
-            Best_elite = elite[end]
+            Best_elite = copy(elite[end])
             dist = Beta(5,2)
             echantillon = trunc(Int64, rand(dist) * (length(elite)-1)) + 1
             if echantillon == length(elite)
                 echantillon -= 1
             end
-            rand_elite = elite[echantillon]
+            rand_elite = copy(elite[echantillon])
             # println("Best result of the run : ", Best_elite)
             # println("Random elite : ", rand_elite)
 
-            while setdiff(Best_elite, rand_elite) != []
-                solution, val = path_relinking(rand_elite[1], Best_elite[1], 5, C)
-                println("Solution : ", solution)
-                println("Val : ", val)
-            end
+            println("EQUAL   ", rand_elite == Best_elite)
+            solution, val = path_relinking(rand_elite, Best_elite, 5, C, A, rhsCurr)
+            println("Solution : ", solution)
+            println("Val : ", val)
         end
 
         best_res = 0

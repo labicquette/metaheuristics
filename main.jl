@@ -21,30 +21,8 @@ eval_naive(C_init, A_init, col_init, 5, false)
 eval_grasp(C_init, A_init, col_init, 5, alpha, IterGrasp, false)
 println("Fin Compilation\n")
 
-"""
-@show C_data
-@show A_data
-@show nlignes
-@show ncolonnes
-"""
-
 C = copy(C_data)
 A = copy(A_data)
-
-"""
-@show C
-
-x, z = solution_initial(C, A, ncolonnes)
-
-@show x
-@show z
-
-x, z = exchange(x, z, C, A)
-
-@show x
-@show z
-
-"""
 
 #@time eval_naive(C, A, ncolonnes, 5)
 

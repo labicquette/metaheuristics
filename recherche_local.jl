@@ -106,5 +106,5 @@ exchange(x, z, C_data, A_data) = begin
         end
     end
 
-    return xBest, zBest, bests
+    return xBest, zBest, bests, rhsCurr
 end

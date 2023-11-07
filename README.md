@@ -2,7 +2,7 @@
 Ce projet implémente une solution basée sur la métaheuristique GRASP (Greedy Randomized Adaptive Search Procedure) pour résoudre le problème du Set Packing (SPP).
 
 ## Auteur
-Theo Charlot  
+Théo Charlot  
 Nicolas Stucky  
   
 ## Description

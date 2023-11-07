@@ -31,22 +31,7 @@ solution_initial_grasp(C, A, ncolonnes, alpha = 0.5) = begin
         # calcul de l'utilité des variables
         utilite = C ./ vec(sum(A, dims=1))
 
-        """
-        # selectionne l'indice de la variable de plus grande utilité
-        j_select = argmax(utilite)
-        """
         # GRASP
-        # Methode 1 : Sélectionne l'indice de la variable avec probabilité alpha, sinon choisit la meilleure utilité
-        if rand() < alpha
-            candidates = findall(x -> x >= mean(utilite), utilite)
-            # println("candidates : ", candidates)
-            j_select = candidates[rand(1:length(candidates))]
-        else
-            j_select = argmax(utilite)
-        end
-
-        """
-        # Methode 2 (ne fonctionne pas)
         # Calcul de la valeur de Limit
         limit = minimum(utilite) + alpha * (maximum(utilite) - minimum(utilite))
 
@@ -59,13 +44,6 @@ solution_initial_grasp(C, A, ncolonnes, alpha = 0.5) = begin
 
         # Sélection d'un élément de la RCL de manière aléatoire
         j_select = rcl_candidates[rand(1:length(rcl_candidates))]
-
-        # Mise à jour de la liste des candidats et de la matrice A
-        posVar = setdiff(posVar, [posVar[j_select]])
-        posVar = posVar[posVar .<= size(A, 2)] # Elimine les indices de variables supérieurs à la taille de A
-        A = A[:, posVar]
-        C = C[posVar]
-        """
 
         # mise à jour de la solution courante et de sa valeur
         x[posVar[j_select]] = 1
@@ -111,7 +89,7 @@ solution_initial_grasp(C, A, ncolonnes, alpha = 0.5) = begin
         push!(bests, z)
     end
 
-    #println("z(init) = ", z)
+    # println("z(init) = ", z)
 
     return x, z, bests
 end
@@ -196,7 +174,7 @@ solution_initial_naive(C, A, ncolonnes) = begin
         push!(bests, z)
     end
 
-    println("z(init) = ", z)
+    # println("z(init) = ", z)
 
     return x, z, bests
 end
