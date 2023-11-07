@@ -17,14 +17,14 @@ alpha = 0.5
 IterGrasp = 100
 
 println("Init Compilation")
-eval_naive(C_init, A_init, col_init, 5, false)
+# eval_naive(C_init, A_init, col_init, 5, false)
 eval_grasp(C_init, A_init, col_init, 5, alpha, IterGrasp, false)
 println("Fin Compilation\n")
 
 C = copy(C_data)
 A = copy(A_data)
 
-#@time eval_naive(C, A, ncolonnes, 5)
+# @time eval_naive(C, A, ncolonnes, 5)
 
 @time eval_grasp(C, A, ncolonnes, 5, alpha, IterGrasp)
 

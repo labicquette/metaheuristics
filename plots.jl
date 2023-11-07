@@ -1,24 +1,36 @@
+ENV["MPLBACKEND"] = "Agg"
 using PyPlot
 
-function plot_naive(cons, opti)
-    println("CONS : ", cons)
-    for i in cons
-        println(i)
-    end
-    p = plot(cons)
-    plot!(p)
+function plot_naive(zinit, zamelio)
+    iteractions = 1:length(zamelio)
+    scatter(iteractions, zamelio, color="b", label="Valeurs de z(x) amelioré")
+    scatter(iteractions, zinit, color="r", label="Valeurs de z(x) contruit")
+    plot([1, length(zamelio)], [maximum(zamelio), maximum(zamelio)], color="g", label="Valeur de z(x) optimale")
+
+    xlabel("Nombre d'itérations")
+    ylabel("Valeur de z(x)")
+    title("Évolution de z(x) au fil des itérations")
+    legend()
     
+    # Affichez le graphique de manière interactive dans le REPL Julia
+    display(gcf())
 end
 
 
-function plot_grasp(cons, z, bests)
-    s = length(cons)
-    for i in 1:s 
-        #println(cons[i])
-        #println(z[i])
-        println(bests[i][1])
-        plot(collect(1:length(bests[i][1])),bests[i][1])
-    end
-    show()
-    println(PyPlot.backend)
+function plot_grasp(zinit, zamelio)
+    iteractions = 1:length(zamelio)
+    scatter(iteractions, zamelio, color="b", label="Valeurs de z(x) amelioré")
+    scatter(iteractions, zinit, color="r", label="Valeurs de z(x) contruit")
+    plot([1, length(zamelio)], [maximum(zamelio), maximum(zamelio)], color="g", label="Valeur de z(x) optimale")
+
+    xlabel("Nombre d'itérations")
+    ylabel("Valeur de z(x)")
+    title("Évolution de z(x) au fil des itérations")
+    legend()
+    
+    # Affichez le graphique de manière interactive dans le REPL Julia
+    display(gcf())end
+
+
+function plot_path_relinking()
 end
