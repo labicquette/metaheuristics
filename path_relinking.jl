@@ -47,6 +47,9 @@ function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
             elit = e[1]
         end
     end
+    if currSum == -1 
+        return solutionOpti, solOptNb
+    end
     return elit, maxe
 end
 
