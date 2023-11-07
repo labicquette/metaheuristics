@@ -6,56 +6,40 @@ using Random
 function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
     solutionActuel = copy(solution1)
     solutionOpti = copy(solution2)
+    currentSol = copy(solution1)
+    currSum = -1
+    solOptNb = sum(C .* solutionOpti)
     elite = []
-    println("SOLUT ACTUEL ", solutionActuel)
-    println("SOLUT OPTI   ", solutionOpti)
-    println("DIFF   ", solutionActuel != solutionOpti)
+    #println("SOLUT ACTUEL ", solutionActuel)
+    #println("SOLUT OPTI   ", solutionOpti)
+    #println("DIFF   ", solutionActuel != solutionOpti)
     # tant que la solution de depart n'est pas egale a la solution d'arrivee
     #path relinking : These X.Delorme
-    """
-    for i in 1:solutionActuel
+    
+    for i in 1:length(solutionActuel)
         if solutionActuel[i] != solutionOpti[i]
             solutionActuel[i] = solutionOpti[i]
             currentSol = copy(solutionActuel)
-            if !admissible(currentSol, C, A, rhsCurr)
-                currentSol = repair(currentSol)
+            #specificite de la fonction admissible qui a besoin de plus et minus
+            if solutionActuel[i] == 0
+                adm = admissible([], [i], C, A, rhsCurr)
+            else 
+                adm = admissible([i],[], C, A, rhsCurr)
             end
-            currentSol = saturation(currentSol)
-            if !in(currentSol, elite) 
-                push!(elite, copy(currentSol))
+            if adm == nothing
+                if !in(currentSol, elite) 
+                    currSum = sum(C .* currentSol)
+                    if currSum > solOptNb
+                        println(currSum, solOptNb)
+                        currentSol, currSum, optiBest = exchange(currentSol, currSum, C, A)
+                        push!(elite, copy(currentSol))
+                    end
+                end
             end
         end
     end
-    """
-    #ancien while
-    while solutionActuel != solutionOpti
-        # genere les voisins de la solution de depart
-        voisins = []
-        i = 0
-        while i < nbvoisins
-            SolutionModifiee = construction_voisins(solutionActuel, solutionOpti, A, rhsCurr)
-            if (SolutionModifiee != solutionActuel) && (!in(SolutionModifiee, voisins))
-                push!(voisins, SolutionModifiee)
-                i += 1
-            end
-        end
-        # println("SIZE voisins : ", length(voisins))
 
-        # selectionne le meilleur voisin
-        solutionActuel = best_voisin(voisins, C)
-
-        if solutionActuel > solutionOpti
-            println("Meilleur trouvee ")
-            # x, z, best = exchange(copy(solutionActuel), valeur(solutionActuel, C), C, A)
-            # if !in(x, elite)
-            #     push!(elite, copy(x))
-            # end
-            println("end recherche local du path")
-        end
-        println("SOLUT ACTUEL ", valeur(solutionActuel, C))
-    end
-
-    return solutionActuel, valeur(solutionActuel, C)
+    return currentSol, currSum
 end
 
 function construction_voisins(solutionActuel, solutionOpti, A, rhsCurr)

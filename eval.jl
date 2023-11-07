@@ -19,6 +19,8 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     temp_all_zCons = []
     temp_bests = []
     elite = []
+    z_init = []
+    z_opti = []
 
     for i in 1:nbruns
         temp_all_z = []
@@ -31,6 +33,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
             start = time()
             x, z = solution_initial_grasp(C, A, ncolonnes, alpha)
             push!(temp_all_zCons, z)
+            push!(z_init, copy(z))
             t_construct = time()
             if z > best_res
                 best_res = z
@@ -41,40 +44,41 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
             end
             x, z, Best, rhsCurr = exchange(x, z, C, A)
             push!(temp_all_z, z)
+            push!(z_opti, copy(z))
             t_opti = time()
             if z > best_res
                 best_res = z
                 best_x = copy(x)
                 push!(temp_bests, z)
-
                 push!(elite, copy(best_x))
                 if verbose 
                     println("New Best result : ", best_res)
                 end
-                
             end
+            if length(elite) > 1
+                Best_elite = copy(elite[end])
+                dist = Beta(5,2)
+                echantillon = trunc(Int64, rand(dist) * (length(elite)-1)) + 1
+                if echantillon == length(elite)
+                    echantillon -= 1
+                end
+                rand_elite = copy(elite[echantillon])
+                # println("Best result of the run : ", Best_elite)
+                # println("Random elite : ", rand_elite)
+    
+                #println("EQUAL   ", rand_elite == Best_elite)
+                solution, val = path_relinking(rand_elite, Best_elite, 5, C, A, rhsCurr)
+                #println("Solution : ", solution)
+                println("Val : ", val)
+            end
+
             times_construct[i] = t_construct - start
             times_opti[i] =  t_opti - t_construct
             times_tot[i] = t_opti - start
         end
 
         # selectionne le meilleur resultat de la run si elite > 1
-        if length(elite) > 1
-            Best_elite = copy(elite[end])
-            dist = Beta(5,2)
-            echantillon = trunc(Int64, rand(dist) * (length(elite)-1)) + 1
-            if echantillon == length(elite)
-                echantillon -= 1
-            end
-            rand_elite = copy(elite[echantillon])
-            # println("Best result of the run : ", Best_elite)
-            # println("Random elite : ", rand_elite)
-
-            println("EQUAL   ", rand_elite == Best_elite)
-            solution, val = path_relinking(rand_elite, Best_elite, 5, C, A, rhsCurr)
-            println("Solution : ", solution)
-            println("Val : ", val)
-        end
+        
 
         best_res = 0
         best_x = zeros(ncolonnes)
@@ -83,8 +87,6 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         push!(all_bests, [temp_bests])
     end
 
-    plot_grasp(all_zCons, all_z, all_bests)
-    
     moy_const = sum(times_construct)/nbruns
     moy_opti = sum(times_opti)/nbruns
     moy_tot = sum(times_tot)/nbruns
@@ -104,6 +106,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         @printf("Temps Total        = %.5fs\n", moy_tot)
 
         println("Best Result : ", best_res)
+        plot_grasp(z_init, z_opti)
     end
     
 end
@@ -116,22 +119,25 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
     times_tot = zeros(Float64, nbruns)
     a_cons_bests = []
     a_opti_bests = []
+    z_init = []
+    z_opti = []
+
 
     for i in 1:nbruns
         start = time()
         x, z, cons_bests = solution_initial_naive(C, A, ncolonnes)
         push!(a_cons_bests, [cons_bests])
+        push!(z_init, copy(z))
         t_construct = time()
         x, z, opti_bests = exchange(x, z, C, A)
         push!(a_opti_bests, [opti_bests])
+        push!(z_opti, copy(z))  
         t_opti = time()
         times_construct[i] = t_construct - start
         times_opti[i] =  t_opti - t_construct
         times_tot[i] = t_opti - start
     end
 
-    
-    #plot_naive(a_cons_bests, a_opti_bests)
     moy_const = sum(times_construct)/nbruns
     moy_opti = sum(times_opti)/nbruns
     moy_tot = sum(times_tot)/nbruns
@@ -149,5 +155,6 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
         @printf("Temps Construction = %.5fs\n", moy_const)
         @printf("Temps Optimisation = %.5fs\n", moy_opti)
         @printf("Temps Total        = %.5fs\n", moy_tot)
+        plot_naive(z_init, z_opti)
     end
 end

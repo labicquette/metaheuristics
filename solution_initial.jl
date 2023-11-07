@@ -188,5 +188,5 @@ function admissible(plus, minus, C, A, rhsCurr)
     for i in minus 
         tempSol .-= i
     end
-    return findfirst(x -> x>1, rhsCurr + tempSol) == nothing
+    return findfirst(x -> x>1, rhsCurr + tempSol)
 end
