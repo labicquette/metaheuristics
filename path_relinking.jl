@@ -9,6 +9,7 @@ function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
     currentSol = copy(solution1)
     currSum = -1
     solOptNb = sum(C .* solutionOpti)
+    localRhs = copy(rhsCurr)
     elite = []
     #println("SOLUT ACTUEL ", solutionActuel)
     #println("SOLUT OPTI   ", solutionOpti)
@@ -22,9 +23,11 @@ function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
             currentSol = copy(solutionActuel)
             #specificite de la fonction admissible qui a besoin de plus et minus
             if solutionActuel[i] == 0
-                adm = admissible([], [i], C, A, rhsCurr)
+                adm = admissible([], [i], C, A, localRhs)
+                localRhs .-= view(A, :, i) 
             else 
-                adm = admissible([i],[], C, A, rhsCurr)
+                adm = admissible([i],[], C, A, localRhs)
+                localRhs .+= view(A, :, i) 
             end
             if adm == nothing
                 if !in(currentSol, elite) 

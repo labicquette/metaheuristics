@@ -183,10 +183,10 @@ end
 function admissible(plus, minus, C, A, rhsCurr)
     tempSol = zeros(Int64, length(rhsCurr))
     for i in plus
-        tempSol .+= i
+        tempSol .+= view(A, :, i) 
     end
     for i in minus 
-        tempSol .-= i
+        tempSol .-= view(A, :, i) 
     end
     return findfirst(x -> x>1, rhsCurr + tempSol)
 end
