@@ -13,7 +13,7 @@ nlignes, ncolonnes = size(A_data)
 C_init, A_init= loadSPP("alldata/didactic.dat")
 lin_init, col_init = size(A_init)
 
-alpha = 0.1
+alpha = 0.7
 IterGrasp = 100
 
 println("Init Compilation")
