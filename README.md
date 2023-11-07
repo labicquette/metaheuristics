@@ -30,6 +30,7 @@ using Pkg
 Pkg.add("GLPK")  
 Pkg.add("PyPlot")  
 Pkg.add("JuMP")  
+Pkg.add("Distributions")  
 
 ## Utilisation
 Pour exécuter l'algorithme GRASP avec un composant additionnel spécifique, utilisez la commande suivante :  

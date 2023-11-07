@@ -1,8 +1,9 @@
 include("solution_initial.jl")
 include("recherche_local.jl")
 include("plots.jl")
+include("path_relinking.jl")
 
-using Statistics
+using Statistics, Distributions
 
 function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     times_construct = zeros(Float64, nbruns)
@@ -17,6 +18,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     temp_all_z = []
     temp_all_zCons = []
     temp_bests = []
+    elite = []
 
     for i in 1:nbruns
         temp_all_z = []
@@ -42,14 +44,36 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                 best_res = z
                 best_x = copy(x)
                 push!(temp_bests, z)
+                push!(elite, (best_x, best_res))
                 if verbose 
                     println("New Best result : ", best_res)
                 end
+                
             end
             times_construct[i] = t_construct - start
             times_opti[i] =  t_opti - t_construct
             times_tot[i] = t_opti - start
         end
+
+        # selectionne le meilleur resultat de la run si elite > 1
+        if length(elite) > 1
+            Best_elite = elite[end]
+            dist = Beta(5,2)
+            echantillon = trunc(Int64, rand(dist) * (length(elite)-1)) + 1
+            if echantillon == length(elite)
+                echantillon -= 1
+            end
+            rand_elite = elite[echantillon]
+            println("Best result of the run : ", Best_elite)
+            println("Random elite : ", rand_elite)
+
+            while setdiff(Best_elite, rand_elite) != []
+                solution, val = path_relinking(rand_elite[1], Best_elite[1], 5, C)
+                println("Solution : ", solution)
+                println("Val : ", val)
+            end
+        end
+
         best_res = 0
         best_x = zeros(ncolonnes)
         push!(all_z, [temp_all_z])

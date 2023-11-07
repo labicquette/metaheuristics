@@ -1,7 +1,7 @@
 function path_relinking(solution1, solution2, nbvoisins, C)
     solutionActuel = copy(solution1)
     # tant que la solution de depart n'est pas egale a la solution d'arrivee
-    while solutionActuel != solution2        
+    while solutionActuel != solution2       
         # genere les voisins de la solution de depart
         voisins = []
         for i in 1:nbvoisins
