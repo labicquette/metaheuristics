@@ -178,3 +178,15 @@ solution_initial_naive(C, A, ncolonnes) = begin
 
     return x, z, bests
 end
+
+
+function admissible(plus, minus, C, A, rhsCurr)
+    tempSol = zeros(Int64, length(rhsCurr))
+    for i in plus
+        tempSol .+= i
+    end
+    for i in minus 
+        tempSol .-= i
+    end
+    return findfirst(x -> x>1, rhsCurr + tempSol) == nothing
+end

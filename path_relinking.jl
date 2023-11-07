@@ -1,4 +1,5 @@
 include("recherche_local.jl")
+include("solution_initial.jl")
 
 using Random
 
@@ -10,6 +11,23 @@ function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
     println("SOLUT OPTI   ", solutionOpti)
     println("DIFF   ", solutionActuel != solutionOpti)
     # tant que la solution de depart n'est pas egale a la solution d'arrivee
+    #path relinking : These X.Delorme
+    """
+    for i in 1:solutionActuel
+        if solutionActuel[i] != solutionOpti[i]
+            solutionActuel[i] = solutionOpti[i]
+            currentSol = copy(solutionActuel)
+            if !admissible(currentSol, C, A, rhsCurr)
+                currentSol = repair(currentSol)
+            end
+            currentSol = saturation(currentSol)
+            if !in(currentSol, elite) 
+                push!(elite, copy(currentSol))
+            end
+        end
+    end
+    """
+    #ancien while
     while solutionActuel != solutionOpti
         # genere les voisins de la solution de depart
         voisins = []
