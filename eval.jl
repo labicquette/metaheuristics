@@ -54,30 +54,31 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                 if verbose 
                     println("New Best result : ", best_res)
                 end
-                
             end
+            if length(elite) > 1
+                Best_elite = copy(elite[end])
+                dist = Beta(5,2)
+                echantillon = trunc(Int64, rand(dist) * (length(elite)-1)) + 1
+                if echantillon == length(elite)
+                    echantillon -= 1
+                end
+                rand_elite = copy(elite[echantillon])
+                # println("Best result of the run : ", Best_elite)
+                # println("Random elite : ", rand_elite)
+    
+                ## println("EQUAL   ", rand_elite == Best_elite)
+                # solution, val = path_relinking(rand_elite, Best_elite, 5, C, A, rhsCurr)
+                ## println("Solution : ", solution)
+                # println("Val : ", val)
+            end
+
             times_construct[i] = t_construct - start
             times_opti[i] =  t_opti - t_construct
             times_tot[i] = t_opti - start
         end
 
         # selectionne le meilleur resultat de la run si elite > 1
-        if length(elite) > 1
-            Best_elite = copy(elite[end])
-            dist = Beta(5,2)
-            echantillon = trunc(Int64, rand(dist) * (length(elite)-1)) + 1
-            if echantillon == length(elite)
-                echantillon -= 1
-            end
-            rand_elite = copy(elite[echantillon])
-            # println("Best result of the run : ", Best_elite)
-            # println("Random elite : ", rand_elite)
-
-            # println("EQUAL   ", rand_elite == Best_elite)
-            # solution, val = path_relinking(rand_elite, Best_elite, 5, C, A, rhsCurr)
-            # println("Solution : ", solution)
-            # println("Val : ", val)
-        end
+        
 
         best_res = 0
         best_x = zeros(ncolonnes)
@@ -85,7 +86,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         push!(all_zCons, [temp_all_zCons])
         push!(all_bests, [temp_bests])
     end
-    
+
     moy_const = sum(times_construct)/nbruns
     moy_opti = sum(times_opti)/nbruns
     moy_tot = sum(times_tot)/nbruns
@@ -121,6 +122,7 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
     z_init = []
     z_opti = []
 
+
     for i in 1:nbruns
         start = time()
         x, z, cons_bests = solution_initial_naive(C, A, ncolonnes)
@@ -129,7 +131,7 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
         t_construct = time()
         x, z, opti_bests = exchange(x, z, C, A)
         push!(a_opti_bests, [opti_bests])
-        push!(z_opti, copy(z))
+        push!(z_opti, copy(z))  
         t_opti = time()
         times_construct[i] = t_construct - start
         times_opti[i] =  t_opti - t_construct
