@@ -7,8 +7,8 @@ function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
     solutionActuel = copy(solution1)
     solutionOpti = copy(solution2)
     currentSol = copy(solution1)
-    currSum = -1
     solOptNb = sum(C .* solutionOpti)
+    currSum = solOptNb
     localRhs = copy(rhsCurr)
     elite = []
     #println("SOLUT ACTUEL ", solutionActuel)
@@ -49,9 +49,6 @@ function path_relinking(solution1, solution2, nbvoisins, C, A, rhsCurr)
             maxe = e[2]
             elit = e[1]
         end
-    end
-    if currSum == -1 
-        return solutionOpti, solOptNb
     end
     return elit, maxe
 end
