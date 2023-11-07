@@ -6,7 +6,6 @@ include("solution_initial.jl")
 include("recherche_local.jl")
 include("eval.jl")
 
-
 C_data, A_data = loadSPP("alldata/pb_100rnd0100.dat")
 nlignes, ncolonnes = size(A_data)
 
