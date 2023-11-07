@@ -14,9 +14,11 @@ C_init, A_init= loadSPP("alldata/didactic.dat")
 lin_init, col_init = size(A_init)
 
 alpha = 0.5
+IterGrasp = 100
 
-println("Compilation test")
-eval_naive(C_init, A_init, col_init, 5, alpha)
+println("Init Compilation")
+eval_naive(C_init, A_init, col_init, 5, false)
+eval_grasp(C_init, A_init, col_init, 5, alpha, IterGrasp, false)
 println("Fin Compilation\n")
 
 """
@@ -44,4 +46,7 @@ x, z = exchange(x, z, C, A)
 
 """
 
-@time eval_naive(C, A, ncolonnes, 5, alpha)
+#@time eval_naive(C, A, ncolonnes, 5)
+
+@time eval_grasp(C, A, ncolonnes, 5, alpha, IterGrasp)
+

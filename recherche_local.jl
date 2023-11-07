@@ -63,8 +63,8 @@ exchange(x, z, C_data, A_data) = begin
             zCurr = zBest
             rhsCurr = rhsCurr - A[:, j10aBest] - A[:, j10bBest] + A[:, j01Best]
 
-            @printf("    echange %3d %3d %3d ", j10aBest, j10bBest, j01Best)
-            println("| z(x) = ", zBest)
+            #@printf("    echange %3d %3d %3d ", j10aBest, j10bBest, j01Best)
+            #println("| z(x) = ", zBest)
         end
     end
 
@@ -101,8 +101,8 @@ exchange(x, z, C_data, A_data) = begin
             zCurr = zBest
             rhsCurr = rhsCurr - A[:, j10Best] + A[:, j01Best]
 
-            @printf("    echange %3d %3d ", j10Best, j01Best)
-            println("| z(x) = ", zBest)
+            #@printf("    echange %3d %3d ", j10Best, j01Best)
+            #println("| z(x) = ", zBest)
         end
     end
 
