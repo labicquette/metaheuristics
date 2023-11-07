@@ -64,8 +64,8 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                 echantillon -= 1
             end
             rand_elite = elite[echantillon]
-            println("Best result of the run : ", Best_elite)
-            println("Random elite : ", rand_elite)
+            # println("Best result of the run : ", Best_elite)
+            # println("Random elite : ", rand_elite)
 
             while setdiff(Best_elite, rand_elite) != []
                 solution, val = path_relinking(rand_elite[1], Best_elite[1], 5, C)

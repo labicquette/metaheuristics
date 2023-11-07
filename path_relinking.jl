@@ -1,19 +1,23 @@
 function path_relinking(solution1, solution2, nbvoisins, C)
     solutionActuel = copy(solution1)
+    solutionOpti = copy(solution2)
     # tant que la solution de depart n'est pas egale a la solution d'arrivee
-    while solutionActuel != solution2       
+    i = 0
+    while ((solutionActuel != solutionOpti) || (i == 20))
         # genere les voisins de la solution de depart
         voisins = []
         for i in 1:nbvoisins
             SolutionModifiee = construction_voisins(solutionActuel)
             if SolutionModifiee != solutionActuel && !in(SolutionModifiee, voisins)
                 push!(voisins, SolutionModifiee)
+                i+=1
             end
         end
+        println("SIZE voisins : ", length(voisins))
         # selectionne le meilleur voisin
         solutionActuel = best_voisin(voisins, C)
 
-        if solutionActuel > solution2
+        if solutionActuel > solutionOpti
             break
         end
     end
@@ -21,9 +25,10 @@ function path_relinking(solution1, solution2, nbvoisins, C)
     return solutionActuel, eval(solutionActuel, C)
 end
 
-function construction_voisins(solution)
+function construction_voisins(solutionActuel)
+    solution = copy(solutionActuel)
     # choisis 2 indices de la solution
-    indices = randperm(length(solution), 2)
+    indices = randperm(length(solution))
     # echange les valeurs correspondantes
     solution[indices[1]], solution[indices[2]] = solution[indices[2]], solution[indices[1]]
     # renvoie la solution modifiee
