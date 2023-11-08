@@ -47,6 +47,8 @@ Il est possible d'activer et désactiver l'affichage des graphes : - ligne 50 ma
 - ligne 127 eval.jl: Graphe GRASP  
 - ligne 128 eval.jl: Graphe path relinking  
 - ligne 177 eval.jl: Graphe sans GRASP  
+
+Attention nous utilisons la visualisation des plots dans VSCode avec le Julia REPL.
   
 ## Rapport
 Les détails sur l'influence des paramètres, les résultats des expérimentations et l'analyse des performances sont inclus dans le rapport LaTeX.  
