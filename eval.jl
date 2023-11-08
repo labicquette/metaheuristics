@@ -10,8 +10,8 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     times_opti = zeros(Float64, nbruns)
     times_tot = zeros(Float64, nbruns)
     
-    best_res = 0
-    best_x = zeros(ncolonnes)
+    
+    
     all_z = []
     all_zCons = []
     all_bests = []
@@ -23,15 +23,21 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     z_opti = []
     val_path = []
 
+    all_bests_res = []
     for i in 1:nbruns
+        best_x = zeros(ncolonnes)
+        best_res = 0
         elite = []
         temp_all_z = []
         temp_all_zCons = []
         temp_bests = []
 
         rhsCurr = nothing
-
-        @time for _ in 1:IterGrasp
+        startTime = time()
+        for _ in 1:IterGrasp
+            if time() - startTime > 60 
+                break
+            end
             start = time()
             x, z = solution_initial_grasp(C, A, ncolonnes, alpha)
             push!(temp_all_zCons, z)
@@ -57,6 +63,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                     println("New Best result : ", best_res)
                 end
             end
+            """
             if length(elite) > 1
                 Best_elite = copy(elite[end])
                 dist = Beta(5,2)
@@ -69,18 +76,22 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                 # println("Random elite : ", rand_elite)
     
                 #println("EQUAL   ", rand_elite == Best_elite)
-                solution, val = path_relinking(rand_elite, Best_elite, elite, temp_bests, C, A, rhsCurr)
-                println(val)
+                solution, val = path_relinking(rand_elite, Best_elite, C, A, rhsCurr)
                 push!(val_path, copy(val))
                 if val > best_res
                     best_x = copy(solution)
                     best_res = val
-                    println("New Best Path Relinking ", val)
+                    push!(elite, best_x)
+                    push!(temp_bests, best_res)
+                    if verbose 
+                        println("New Best Path Relinking ", val)
+                    end
                 end
                 #println("Solution : ", solution)
                 #println("Val : ", val)
                 #println("best res ", best_res)
             end
+            """
 
             times_construct[i] = t_construct - start
             times_opti[i] =  t_opti - t_construct
@@ -88,10 +99,10 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         end
 
         # selectionne le meilleur resultat de la run si elite > 1
-        best_x = zeros(ncolonnes)
         push!(all_z, [temp_all_z])
         push!(all_zCons, [temp_all_zCons])
         push!(all_bests, [temp_bests])
+        push!(all_bests_res, best_res)
     end
 
     moy_const = sum(times_construct)/nbruns
@@ -112,11 +123,11 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         @printf("Temps Optimisation = %.5fs\n", moy_opti)
         @printf("Temps Total        = %.5fs\n", moy_tot)
 
-        println("Best Result : ", best_res)
+        println("Best Results : ", all_bests_res)
         #plot_grasp(z_init, z_opti)
-        plot_path_relinking(val_path)
+        plot_path_relinking(z_init, val_path)
     end
-    
+    return all_bests_res
 end
 
 

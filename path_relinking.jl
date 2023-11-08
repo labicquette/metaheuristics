@@ -3,7 +3,7 @@ include("solution_initial.jl")
 
 using Random
 
-function path_relinking(solution1, solution2, elite, bests_z, C, A, rhsCurr)
+function path_relinking(solution1, solution2, C, A, rhsCurr)
     solutionActuel = copy(solution1)
     solutionOpti = copy(solution2)
     currentSol = copy(solution1)
@@ -17,7 +17,7 @@ function path_relinking(solution1, solution2, elite, bests_z, C, A, rhsCurr)
     #path relinking : These X.Delorme
     bestSol = solutionOpti
     bestSolNb = solOptNb
-    
+    elite = []
     for i in 1:length(solutionActuel)
         if solutionActuel[i] != solutionOpti[i]
             solutionActuel[i] = solutionOpti[i]
@@ -34,13 +34,10 @@ function path_relinking(solution1, solution2, elite, bests_z, C, A, rhsCurr)
                 if !in(currentSol, elite) 
                     currSum = sum(C .* currentSol)
                     if currSum > solOptNb
-                        #println("1 : CurSum ", currSum, "  " ,solOptNb)
                         currentSol, currSum, optiBest = exchange(currentSol, currSum, C, A)
                         #println("2 : CurSum ", currSum, "  " ,solOptNb)
                         bestSol = copy(currentSol)
                         bestSolNb = currSum
-                        push!(elite, copy(currentSol))
-                        push!(bests_z, copy(currSum))
                     end
                 end
             end
