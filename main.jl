@@ -24,12 +24,27 @@ files = ["alldata/pb_100rnd0100.dat",
          "alldata/pb_100rnd0300.dat",
          "alldata/pb_100rnd0400.dat",
          "alldata/pb_100rnd0500.dat",
-         "alldata/pb_200rnd0100.dat",
+         #"alldata/pb_200rnd0100.dat",
          "alldata/pb_200rnd0200.dat",
          #"alldata/pb_200rnd0300.dat",
-         "alldata/pb_200rnd0400.dat",
+         #"alldata/pb_200rnd0400.dat",
          "alldata/pb_200rnd0500.dat"]
+
+#best known value of instance
+max_opti = [372, 
+            34, 
+            203, 
+            16, 
+            639, 
+            #416, 
+            32, 
+            #731, 
+            #64, 
+            184]
+
 # @time eval_naive(C, A, ncolonnes, 5)
+
+
 zmin = []
 zmean = []
 zmax = []
@@ -39,7 +54,7 @@ for f in files
     nlignes, ncolonnes = size(A_data)
     C = copy(C_data)
     A = copy(A_data)
-    @time temp = eval_grasp(C, A, ncolonnes, 5, alpha, IterGrasp, false)
+    @time temp = eval_grasp(C, A, ncolonnes, 3, alpha, IterGrasp, false)
     push!(zmin, minimum(temp))
     push!(zmean, mean(temp))
     push!(zmax, maximum(temp)) 
@@ -47,4 +62,4 @@ end
 @show zmin
 @show zmean
 @show zmax
-plot_z(zmin, zmean, zmax)
+plot_z(zmin, zmean, zmax, max_opti)

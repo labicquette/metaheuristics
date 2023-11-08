@@ -49,11 +49,11 @@ function plot_path_relinking(zinit, val)
 end
 
 
-function plot_z(zmin, zmean, zmax)
+function plot_z(zmin, zmean, zmax, max_instance)
     range = 1:length(zmin)
     scatter(range, zmin, label="Z min") 
     scatter(range, zmean, label="Z mean") 
     scatter(range, zmax, label="Z max") 
-
+    plot(range, max_instance, label="Max Instance")
     display(gcf())
 end
