@@ -41,7 +41,12 @@ Pour exécuter l'algorithme GRASP avec un composant additionnel spécifique, uti
 Juila REPL  
 include("main.jl")
 
-Il est possible de changer l'instance en modifiant le chemin à la lignes 10 de main?jl
+Il est possible de changer l'instance en modifiant le chemin à la lignes 10 de main.jl  
+Pour lancer sans GRASP il faut retirer le commentaire ligne 32 de main.jl  
+Il est possible d'activer et désactiver l'affichage des graphes : - ligne 50 main.jl: Graphe zmin, zmax et zmean  
+- ligne 127 eval.jl: Graphe GRASP  
+- ligne 128 eval.jl: Graphe path relinking  
+- ligne 177 eval.jl: Graphe sans GRASP  
   
 ## Rapport
 Les détails sur l'influence des paramètres, les résultats des expérimentations et l'analyse des performances sont inclus dans le rapport LaTeX.  
