@@ -39,7 +39,7 @@ for f in files
     nlignes, ncolonnes = size(A_data)
     C = copy(C_data)
     A = copy(A_data)
-    @time temp = eval_grasp(C, A, ncolonnes, 1, alpha, IterGrasp, false)
+    @time temp = eval_grasp(C, A, ncolonnes, 5, alpha, IterGrasp, false)
     push!(zmin, minimum(temp))
     push!(zmean, mean(temp))
     push!(zmax, maximum(temp)) 
