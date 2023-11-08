@@ -6,7 +6,7 @@ Théo Charlot
 Nicolas Stucky  
   
 ## Description
-Ce projet propose une implémentation de l'algorithme GRASP pour le Set Packing Problem, avec la possibilité d'expérimenter différents composants additionnels tels que ReactiveGRASP, Path-Relinking, Destroy-and-Repair.  
+Ce projet propose une implémentation de l'algorithme GRASP pour le Set Packing Problem, avec la possibilité d'expérimenter une composant additionnel Path-Relinking.  
 
 ## Structure du Projet
 main.jl: Le fichier principal pour executer le programme.  
@@ -14,6 +14,7 @@ solution_initial.jl: Implémentation de l'heuristique de construction GRASP.
 recherche_local.jl: Implémentation de l'amélioration de la solution initial avec k-p exchange.  
 eval.jl: Le fichier contient les fonctions pour effectuer x runs du programme.  
 loadSPP.jl: Charge une instance SPP.  
+path_relinking.jl: Implémentation de la composante additionnel.  
 alldata/: Répertoire contenant les fichiers des instances du SPP à résoudre.  
 
 ## Dépandance
