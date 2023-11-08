@@ -51,9 +51,12 @@ end
 
 function plot_z(zmin, zmean, zmax)
     range = 1:length(zmin)
-    scatter(range, zmin, label="Z min") 
-    scatter(range, zmean, label="Z mean") 
-    scatter(range, zmax, label="Z max") 
+     
+    scatter(range, zmax, color="g", alpha=0.5, marker="o",  label="Z max")
+    scatter(range, zmin, color="b", alpha=0.5, marker="^", label="Z min") 
+    scatter(range, zmean, color="r", alpha=0.2, marker="s", label="Z mean")
+    title("")
+    legend()
 
     display(gcf())
 end
