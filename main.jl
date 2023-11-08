@@ -12,7 +12,7 @@ C_init, A_init= loadSPP("alldata/didactic.dat")
 lin_init, col_init = size(A_init)
 
 alpha = 0.7
-IterGrasp = 100
+IterGrasp = 500
 
 println("Init Compilation")
 # eval_naive(C_init, A_init, col_init, 5, false)
@@ -24,10 +24,10 @@ files = ["alldata/pb_100rnd0100.dat",
          "alldata/pb_100rnd0300.dat",
          "alldata/pb_100rnd0400.dat",
          "alldata/pb_100rnd0500.dat",
-         #"alldata/pb_200rnd0100.dat",
+         "alldata/pb_200rnd0100.dat",
          "alldata/pb_200rnd0200.dat",
-         #"alldata/pb_200rnd0300.dat",
-         #"alldata/pb_200rnd0400.dat",
+         "alldata/pb_200rnd0300.dat",
+         "alldata/pb_200rnd0400.dat",
          "alldata/pb_200rnd0500.dat"]
 
 #best known value of instance
@@ -36,10 +36,10 @@ max_opti = [372,
             203, 
             16, 
             639, 
-            #416, 
+            416, 
             32, 
-            #731, 
-            #64, 
+            731, 
+            64, 
             184]
 
 # @time eval_naive(C, A, ncolonnes, 5)
@@ -54,7 +54,8 @@ for f in files
     nlignes, ncolonnes = size(A_data)
     C = copy(C_data)
     A = copy(A_data)
-    @time temp = eval_grasp(C, A, ncolonnes, 3, alpha, IterGrasp, false)
+    @time temp = eval_grasp(C, A, ncolonnes, 5, alpha, IterGrasp, false)
+    println("temp", temp)
     push!(zmin, minimum(temp))
     push!(zmean, mean(temp))
     push!(zmax, maximum(temp)) 

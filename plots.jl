@@ -51,10 +51,10 @@ end
 
 function plot_z(zmin, zmean, zmax, max_instance)
     range = 1:length(zmin)
-    scatter(range, zmin, color="b", alpha=0.5, marker="^", label="Z min") 
-    scatter(range, zmean,  color="r", alpha=0.2, marker="s", label="Z mean") 
-    scatter(range, zmax,  color="g", alpha=0.5, marker="o", label="Z max")
-    plot(range, max_instance, label="Max Instance")
+    scatter(range, zmin, color="b", alpha=0.5, marker="+", label="Z min") 
+    scatter(range, zmean,  color="orange", alpha=0.5, marker="+", label="Z mean") 
+    scatter(range, zmax,  color="g", alpha=0.5, marker="+", label="Z max")
+    scatter(range, max_instance, color="r", marker="_", label="Max Instance")
     title("")
     legend() 
 

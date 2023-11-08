@@ -104,6 +104,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         push!(all_bests, [temp_bests])
         push!(all_bests_res, best_res)
     end
+    
 
     moy_const = sum(times_construct)/nbruns
     moy_opti = sum(times_opti)/nbruns
