@@ -16,7 +16,6 @@ function plot_naive(zinit, zamelio)
     display(gcf())
 end
 
-
 function plot_grasp(zinit, zamelio)
     iteractions = 1:length(zamelio)
     scatter(iteractions, zamelio, color="b", s=5, label="Valeurs de z(x) amelioré")

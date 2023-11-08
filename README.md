@@ -38,7 +38,9 @@ Pkg.add("Plots")
 Pour exécuter l'algorithme GRASP avec un composant additionnel spécifique, utilisez la commande suivante :  
   
 Juila REPL  
-include("main.jl")  
+include("main.jl")
+
+Il est possible de changer l'instance en modifiant le chemin à la lignes 10 de main?jl
   
 ## Rapport
 Les détails sur l'influence des paramètres, les résultats des expérimentations et l'analyse des performances sont inclus dans le rapport LaTeX.  

@@ -11,8 +11,8 @@ include("plots.jl")
 C_init, A_init= loadSPP("alldata/didactic.dat")
 lin_init, col_init = size(A_init)
 
-alpha = 0.5
-IterGrasp = 300
+alpha = 0.7
+IterGrasp = 100
 
 println("Init Compilation")
 # eval_naive(C_init, A_init, col_init, 5, false)
