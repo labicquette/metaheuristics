@@ -2,6 +2,7 @@ include("solution_initial.jl")
 include("recherche_local.jl")
 include("plots.jl")
 include("path_relinking.jl")
+include("GA.jl")
 
 using Statistics, Distributions
 
@@ -63,7 +64,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                     println("New Best result : ", best_res)
                 end
             end
-            """
+            
             if length(elite) > 1
                 Best_elite = copy(elite[end])
                 dist = Beta(5,2)
@@ -91,7 +92,7 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
                 #println("Val : ", val)
                 #println("best res ", best_res)
             end
-            """
+            
 
             times_construct[i] = t_construct - start
             times_opti[i] =  t_opti - t_construct
@@ -144,7 +145,7 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
     a_opti_bests = []
     z_init = []
     z_opti = []
-
+    all_bests = []
 
     for i in 1:nbruns
         start = time()
@@ -155,6 +156,7 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
         x, z, opti_bests = exchange(x, z, C, A)
         push!(a_opti_bests, [opti_bests])
         push!(z_opti, copy(z))  
+        push!(all_bests, z)
         t_opti = time()
         times_construct[i] = t_construct - start
         times_opti[i] =  t_opti - t_construct
@@ -179,5 +181,23 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
         @printf("Temps Optimisation = %.5fs\n", moy_opti)
         @printf("Temps Total        = %.5fs\n", moy_tot)
         plot_naive(z_init, z_opti)
+    end
+
+    return all_bests
+end
+
+
+function eval_GA(C, A, ncolonnes, nbruns, nbIter=5, nbPop=20, alphaGrasp=0.7, verbose=true)
+    for i in 1:nbruns
+        pop = []
+        pop_score = []
+        solution_initial_GA(C, A, ncolonnes, pop, pop_score, alphaGrasp, nbPop)
+        for j in 1:nbIter
+            #fitness()
+            #crossover()
+            #mutation()
+            #evaluation()
+            #selection()
+        end
     end
 end

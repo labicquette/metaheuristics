@@ -193,3 +193,12 @@ function admissible(plus, minus, C, A, rhsCurr)
     end
     return findfirst(x -> x>1, rhsCurr + tempSol)
 end
+
+
+function solution_initial_GA(C, A, ncolonnes, pop, pop_score, alphaGrasp, nbpop)
+    for _ in 1:nbpop
+        x, z, bests = solution_initial_grasp(C, A, ncolonnes, alphaGrasp)
+        push!(pop, copy(x))
+        push!(pop_score, copy(z))
+    end
+end
