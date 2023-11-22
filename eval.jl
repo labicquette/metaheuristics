@@ -125,12 +125,15 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
         @printf("Temps Total        = %.5fs\n", moy_tot)
 
         println("Best Results : ", all_bests_res)
-        #plot_grasp(z_init, z_opti)
-        plot_path_relinking(z_init, val_path)
+        plot_grasp(z_init, z_opti)
+        # plot_path_relinking(z_init, val_path)
     end
     return all_bests_res
 end
 
+function eval_genetic(C, A, ncolonnes, nbruns, verbose=true)
+    # TODO
+end
 
 #DM1
 function eval_naive(C, A, ncolonnes, nbruns, verbose=true)

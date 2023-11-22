@@ -179,6 +179,9 @@ solution_initial_naive(C, A, ncolonnes) = begin
     return x, z, bests
 end
 
+solution_initial_genetic(C, A, ncolonnes) = begin
+    # TODO
+end
 
 function admissible(plus, minus, C, A, rhsCurr)
     tempSol = zeros(Int64, length(rhsCurr))

@@ -15,7 +15,7 @@ alpha = 0.7
 IterGrasp = 500
 
 println("Init Compilation")
-# eval_naive(C_init, A_init, col_init, 5, false)
+eval_naive(C_init, A_init, col_init, 5, false)
 eval_grasp(C_init, A_init, col_init, 2, alpha, IterGrasp, false)
 println("Fin Compilation\n")
 
@@ -49,18 +49,18 @@ zmin = []
 zmean = []
 zmax = []
 
-for f in files 
-    C_data, A_data = loadSPP(f)
-    nlignes, ncolonnes = size(A_data)
-    C = copy(C_data)
-    A = copy(A_data)
-    @time temp = eval_grasp(C, A, ncolonnes, 5, alpha, IterGrasp, false)
-    println("temp", temp)
-    push!(zmin, minimum(temp))
-    push!(zmean, mean(temp))
-    push!(zmax, maximum(temp)) 
-end
-@show zmin
-@show zmean
-@show zmax
-plot_z(zmin, zmean, zmax, max_opti)
+# for f in files 
+#     C_data, A_data = loadSPP(f)
+#     nlignes, ncolonnes = size(A_data)
+#     C = copy(C_data)
+#     A = copy(A_data)
+#     @time temp = eval_grasp(C, A, ncolonnes, 5, alpha, IterGrasp)
+#     println("temp", temp)
+#     push!(zmin, minimum(temp))
+#     push!(zmean, mean(temp))
+#     push!(zmax, maximum(temp)) 
+# end
+# @show zmin
+# @show zmean
+# @show zmax
+# plot_z(zmin, zmean, zmax, max_opti)
