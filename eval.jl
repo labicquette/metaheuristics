@@ -132,10 +132,6 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     return all_bests_res
 end
 
-function eval_genetic(C, A, ncolonnes, nbruns, verbose=true)
-    # TODO
-end
-
 #DM1
 function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
     times_construct = zeros(Float64, nbruns)
@@ -187,16 +183,20 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
 end
 
 
-function eval_GA(C, A, ncolonnes, nbruns, nbIter=5, nbPop=20, alphaGrasp=0.7, verbose=true)
+function eval_GA(C, A, ncolonnes, nbruns, nbIter=5, nbPop=20, mut_rate=0.2, alphaGrasp=0.7, verbose=true)
     for i in 1:nbruns
+        #population always sorted
         pop = []
-        pop_score = []
+        next_pop = []
+        pop_score = zeros(nbPop)
+        fitness = zeros(nbPop) # pop_score != fitness ???
         solution_initial_GA(C, A, ncolonnes, pop, pop_score, alphaGrasp, nbPop)
         for j in 1:nbIter
-            #fitness()
-            #crossover()
+            fitness(C, A, pop, pop_score, fitness)# ???
+            next_pop = copy(pop)
+            crossover(pop, next_pop, pop_score) # maybe pop_fitness
             #mutation()
-            #evaluation()
+            #evaluation() # ????
             #selection()
         end
     end
