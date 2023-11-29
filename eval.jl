@@ -182,21 +182,25 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
     return all_bests
 end
 
-function eval_GA(C, A, ncolonnes, nbruns, nbIter=5, nbPop=20, mut_rate=0.2, alphaGrasp=0.7, verbose=true)
+function eval_GA(C, A, ncolonnes, nbruns, nbIter=5, nbPop=20, nbElite=3, mut_rate=0.2, alphaGrasp=0.7, verbose=true)
     for i in 1:nbruns
         #population always sorted
         pop = []
-        next_pop = []
+        next_pop = zeros(nbPop, size(C))
         pop_score = zeros(nbPop)
         fitness = zeros(nbPop) # pop_score != fitness ???
+        elites = zeros(nbElite, size(C))
+        elites_score = zeros(nbElite)
+
         solution_initial_GA(C, A, ncolonnes, pop, pop_score, alphaGrasp, nbPop)
+        
         for j in 1:nbIter
             fitness(C, A, pop, pop_score, fitness)# ???
             next_pop = copy(pop)
-            crossover(pop, next_pop, pop_score) # maybe pop_fitness
-            #mutation()
-            #evaluation() # ????
-            #selection()
+            # crossover(pop, next_pop, pop_score) # maybe pop_fitness
+            mutation(next_pop, mut_rate)
+            # evaluation() # ????
+            # selection()
         end
     end
 end
