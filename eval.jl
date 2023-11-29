@@ -132,10 +132,6 @@ function eval_grasp(C, A, ncolonnes, nbruns, alpha, IterGrasp = 5, verbose=true)
     return all_bests_res
 end
 
-function eval_genetic(C, A, ncolonnes, nbruns, verbose=true)
-    # TODO
-end
-
 #DM1
 function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
     times_construct = zeros(Float64, nbruns)
@@ -185,7 +181,6 @@ function eval_naive(C, A, ncolonnes, nbruns, verbose=true)
 
     return all_bests
 end
-
 
 function eval_GA(C, A, ncolonnes, nbruns, nbIter=5, nbPop=20, alphaGrasp=0.7, verbose=true)
     for i in 1:nbruns
