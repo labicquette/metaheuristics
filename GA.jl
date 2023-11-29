@@ -28,9 +28,19 @@ end
 function mutation(next_pop, mut_rate)
     print("mutation\n")
     print("next_pop: ", next_pop)
-    mask = rand(size(next_pop)) .< mut_rate 
-    next_pop[value] .= 1 .- next_pop[value]
+
+    # for i in 1:length(next_pop)
+    #     print("next_pop[i]: ", next_pop[i])
+    #     print("rand: ", rand())
+    #     if rand() < mut_rate
+    #         next_pop[i] = rand()
+    #     end        
+    # end
+
+    mask = rand(size(next_pop)) .< mut_rate
+    next_pop[mask] .= rand(sum(mask))
     print("next_pop: ", next_pop)
+
 end
 
 function fitness(C, A, pop, pop_score, fitness)
