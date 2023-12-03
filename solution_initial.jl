@@ -193,9 +193,9 @@ end
 
 
 function solution_initial_GA(C, A, ncolonnes, pop, pop_score, alphaGrasp, nbpop)
-    for _ in 1:nbpop
+    for it in 1:nbpop
         x, z, bests = solution_initial_grasp(C, A, ncolonnes, alphaGrasp)
-        push!(pop, copy(x))
-        push!(pop_score, copy(z))
+        pop[it] = deepcopy(x)
+        pop_score[it] = deepcopy(z)
     end
 end

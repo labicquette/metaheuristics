@@ -8,18 +8,21 @@ end
 
 function crossover(pop, next_pop, pop_score)
     #can be optimized 
-    next_pop[:,] = copy(pop)
-    parents1 = rand(pop, 1:(trunc(Int, length(pop)/2)))
-    parents2 = rand(pop, 1:(trunc(Int, length(pop)/2)))
-    CrossPoint = rand(1:length(pop[1]-1), trunc(Int, length(pop)/2))
+    parents1 = rand(1:length(pop), trunc(Int, length(pop)/2))
+    parents2 = rand(1:length(pop), trunc(Int, length(pop)/2))
+    CrossPoint = rand(2:length(pop[1]), trunc(Int, length(pop)/2))
     lengthCP = length(CrossPoint)
+    
     for p in 1:lengthCP
-        next_pop[p][1:CrossPoint[p]] = parents1[p][1:CrossPoint[p]]
-        next_pop[p][CrossPoint[p]:end] = parents2[p][CrossPoint[p]:end]
-
-        next_pop[p+lengthCP][1:CrossPoint[p]] = parents1[p][1:CrossPoint[p]]
-        next_pop[p+lengthCP][CrossPoint[p]:end] = parents2[p][CrossPoint[p]:end]
+        #child1
+        next_pop[p][1:CrossPoint[p]] = pop[parents1[p]][1:CrossPoint[p]]
+        next_pop[p][CrossPoint[p]:end] = pop[parents2[p]][CrossPoint[p]:end]
+        #child2
+        c2 = p+lengthCP-2
+        next_pop[c2][1:CrossPoint[p]] = pop[parents2[p]][1:CrossPoint[p]]
+        next_pop[c2][CrossPoint[p]:end] = pop[parents1[p]][CrossPoint[p]:end]
     end
+    
     #pick couples of random from pop[:,size(pop)/2]
     #pick random location of swap
     #asssign next_pop[rand:] = pop[rand:]
@@ -27,7 +30,7 @@ end
 
 function mutation(next_pop, mut_rate)
     print("mutation\n")
-    print("next_pop: ", next_pop)
+    println("next_pop: ", next_pop)
 
     # for i in 1:length(next_pop)
     #     print("next_pop[i]: ", next_pop[i])
@@ -36,11 +39,14 @@ function mutation(next_pop, mut_rate)
     #         next_pop[i] = rand()
     #     end        
     # end
-
-    mask = rand(size(next_pop)) .< mut_rate
-    next_pop[mask] .= rand(sum(mask))
-    print("next_pop: ", next_pop)
-
+    #println(rand(Float64,size(next_pop)) .< mut_rate)
+    mask = rand(Float64,(length(next_pop),length(next_pop[1]))) .< mut_rate
+    #println("mask", mask)
+    println(next_pop[mask])
+    #!!!!!!!!!!!!!
+    #FIX : next_pop[mask] -> problem = mask is bitmatrix, 
+    #                        doesn't work with Vector{Vector{Int64}}
+    #next_pop[mask] .=  1 .- next_pop[mask]
 end
 
 function fitness(C, A, pop, pop_score, fitness)

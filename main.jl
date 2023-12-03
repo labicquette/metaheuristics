@@ -82,28 +82,10 @@ function dm3()
     nbIter=5
     nbPop=20
     nbElite=3
-    mut_rate=1
+    mut_rate=0.5
     alphaGrasp=0.7
     verbose=true
        
-    for i in 1:nbruns
-        #population always sorted
-        pop = []
-        next_pop = []
-        pop_score = zeros(nbPop)
-        # fitness = zeros(nbPop) # pop_score != fitness ???
-        # elites = zeros(nbElite, size(C))
-        # elites_score = zeros(nbElite)
-
-        solution_initial_GA(C, A, col, pop, pop_score, alphaGrasp, nbPop)
-        
-        for j in 1:nbIter
-            # fitness(C, A, pop, pop_score, fitness)# ???
-            next_pop = copy(pop)
-            # crossover(pop, next_pop, pop_score) # maybe pop_fitness
-            mutation(next_pop, mut_rate)
-            # evaluation() # ????
-            # selection()
-        end
-    end
+    eval_GA(C, A, col, nbruns, nbIter, nbPop,  nbElite, mut_rate, alphaGrasp, verbose)
+    
 end
