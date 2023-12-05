@@ -1,9 +1,9 @@
 function selection()
-    #
+
 end
 
 function evaluation()
-    ## ????
+    # see top half of population and compute fitness
 end
 
 function crossover(pop, next_pop, pop_score)
@@ -29,24 +29,16 @@ function crossover(pop, next_pop, pop_score)
 end
 
 function mutation(next_pop, mut_rate)
-    print("mutation\n")
-    println("next_pop: ", next_pop)
+    #print("mutation\n")
+    #println("next_pop: ", next_pop)
 
-    # for i in 1:length(next_pop)
-    #     print("next_pop[i]: ", next_pop[i])
-    #     print("rand: ", rand())
-    #     if rand() < mut_rate
-    #         next_pop[i] = rand()
-    #     end        
-    # end
-    #println(rand(Float64,size(next_pop)) .< mut_rate)
-    mask = rand(Float64,(length(next_pop),length(next_pop[1]))) .< mut_rate
-    #println("mask", mask)
-    println(next_pop[mask])
-    #!!!!!!!!!!!!!
-    #FIX : next_pop[mask] -> problem = mask is bitmatrix, 
-    #                        doesn't work with Vector{Vector{Int64}}
-    #next_pop[mask] .=  1 .- next_pop[mask]
+    for ind in 1:length(next_pop)
+        for ind2 in 1:length(next_pop[ind])
+            if rand() < mut_rate
+                next_pop[ind][ind2] = 1 - next_pop[ind][ind2]
+            end
+        end        
+    end
 end
 
 function fitness(C, A, pop, pop_score, fitness)

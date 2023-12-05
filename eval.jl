@@ -188,22 +188,23 @@ function eval_GA(C, A, ncolonnes, nbruns, nbIter=5, nbPop=20, nbElite=3, mut_rat
         pop = [zeros(Int64,length(C)) for _ in 1:nbPop]
         next_pop = [zeros(Int64,length(C)) for _ in 1:nbPop]
         pop_score = zeros(nbPop)
+        elites = [zeros(Int64,length(C)) for _ in 1:nbElite]
         fitness = zeros(nbPop) # pop_score != fitness ???
-        #elites = zeros(nbElite, size(C))
-        #elites_score = zeros(nbElite)
+        elites_score = zeros(nbElite)
         
         solution_initial_GA(C, A, ncolonnes, pop, pop_score, alphaGrasp, nbPop)
 
         for j in 1:nbIter
-            #fitness(C, A, pop, pop_score, fitness)# ???
-            #next_pop = deepcopy(pop)
-            #println(pop)
-            pop[1] = [1,2,3,4,5,6,7,8,9] #test
-            #crossover(pop, next_pop, pop_score) # maybe pop_fitness
+            fitness(C, A, pop, pop_score, fitness)# ???
+            #sort + save elites 
+            next_pop = deepcopy(pop) #test
+            crossover(pop, next_pop, pop_score) # maybe pop_fitness
+            println(next_pop[1])
             mutation(next_pop, mut_rate)
-            # evaluation() # ????
-            # selection()
+            evaluation() # ????
+            #reconstruction(top(evaluation))
             pop = copy(next_pop)
         end
+        return elites
     end
 end
