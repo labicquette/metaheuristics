@@ -1,10 +1,3 @@
-function selection()
-
-end
-
-function evaluation()
-    # see top half of population and compute fitness
-end
 
 function crossover(pop, next_pop, pop_score)
     #can be optimized 
@@ -41,9 +34,66 @@ function mutation(next_pop, mut_rate)
     end
 end
 
-function fitness(C, A, pop, pop_score, fitness)
+function fitness(C, A, pop, pop_score)
     # fitness is the simple sum of C no weights
     for indiv in 1:length(pop)
         pop_score[indiv] = sum(pop[indiv] .* C) 
     end
+end
+
+
+function savelites(pop, pop_score, elites, elites_score, nbElite)
+    ptpop = 1
+    ptel = 1
+    res = []
+    res_score = []
+    println(pop_score)
+    println(elites_score)
+    while length(res_score) < nbElite
+        if elites_score[ptel] >= pop_score[ptpop]
+            push!(res, elites[ptel])
+            push!(res_score, elites_score[ptel])
+            ptel += 1
+        elseif elites_score[ptel] < pop_score[ptpop]
+            push!(res, pop[ptpop])
+            push!(res_score, pop_score[ptpop])
+            ptpop += 1
+        end
+    end
+    pop[1:nbElite] = deepcopy(res)
+    pop_score[1:nbElite] = deepcopy(res_score)
+    elites[:,] = deepcopy(res)
+    elites_score[:,] = deepcopy(res_score)
+
+end
+
+
+
+
+function reconstruction(A, C,  pop, pop_score)
+    
+    for ind in 1:length(pop)
+        #test admissible
+        destruct(A, C, pop[:,ind], pop_score[:,ind])
+        #saturation
+    end
+
+end
+
+function destruct(A, C, individu, ind_score)
+    len, _ = size(A)
+    temp = zeros(len)
+    destructed = []
+    for iter in 1:length(individu)
+        temp[:,] = temp .+ A[:,iter]
+        for item in 1:length(temp)
+            if temp[item] > 1
+                temp[:,] = temp .- A[:,iter]
+                individu[iter] = 0
+                ind_score -= C[:,iter]
+                push!(destructed, iter)
+            end
+        end
+    end
+    return destructed
 end
