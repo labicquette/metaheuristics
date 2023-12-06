@@ -72,14 +72,14 @@ function dm2()
 end
 
 function dm3()
-    C, A= loadSPP("alldata/didactic.dat")
+    C, A= loadSPP("alldata/pb_100rnd0100.dat")
     row, col = size(A)
 
     # paramètres
     nbIter = 10
     nbPop = 10
     nbruns = 1
-    nbIter=5
+    nbIter=1000
     nbPop=20
     nbElite=3
     mut_rate=0.5

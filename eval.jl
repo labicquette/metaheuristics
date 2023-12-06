@@ -203,7 +203,7 @@ function eval_GA(C, A, ncolonnes, nbruns, nbIter=5, nbPop=20, nbElite=3, mut_rat
             next_pop = deepcopy(pop) #test
             crossover(pop, next_pop, pop_score) # maybe pop_fitness
             mutation(next_pop, mut_rate)
-            reconstruction(A, C,  pop, pop_score)
+            reconstruction(A, C,  next_pop, pop_score)
             pop[:,] = copy(next_pop)
         end
         return elites
