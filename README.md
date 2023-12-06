@@ -40,13 +40,18 @@ Pour exécuter l'algorithme GRASP avec un composant additionnel spécifique, uti
   
 Juila REPL  
 include("main.jl")
+dm2()
 
-Il est possible de changer l'instance en modifiant le chemin à la lignes 10 de main.jl  
-Pour lancer sans GRASP il faut retirer le commentaire ligne 32 de main.jl  
-Il est possible d'activer et désactiver l'affichage des graphes : - ligne 50 main.jl: Graphe zmin, zmax et zmean  
-- ligne 127 eval.jl: Graphe GRASP  
-- ligne 128 eval.jl: Graphe path relinking  
-- ligne 177 eval.jl: Graphe sans GRASP  
+Pour exécuter l'algorithme genetique utilisez la commande suivante :  
+Juila REPL  
+include("main.jl")
+dm3()
+
+Il est possible de changer l'instance en modifiant le chemin à la lignes 11 et 75 de main.jl  
+Il est possible d'activer et désactiver l'affichage des graphes : - ligne 66 main.jl: Graphe zmin, zmax et zmean  
+- ligne 129 eval.jl: Graphe GRASP  
+- ligne 130 eval.jl: Graphe path relinking  
+- ligne 179 eval.jl: Graphe sans GRASP  
 
 Attention nous utilisons la visualisation des plots dans VSCode avec le Julia REPL.
   

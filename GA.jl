@@ -67,16 +67,19 @@ function savelites(pop, pop_score, elites, elites_score, nbElite)
 
 end
 
-
-
-
 function reconstruction(A, C,  pop, pop_score)
+
+    ind_to_destroy = []
     
     for ind in 1:length(pop)
         #test admissible
-        destruct(A, C, pop[:,ind], pop_score[:,ind])
-        #saturation
+        destroy_inds = destruct(A, C, pop[:,ind], pop_score[:,ind])
+
+        ind_to_destroy = union(ind_to_destroy, destroy_inds)
     end
+    # kill strategy
+    pop = pop[:,setdiff(1:end, ind_to_destroy)]
+    pop_score = pop_score[:,setdiff(1:end, ind_to_destroy)]
 
 end
 
@@ -85,12 +88,19 @@ function destruct(A, C, individu, ind_score)
     temp = zeros(len)
     destructed = []
     for iter in 1:length(individu)
-        temp[:,] = temp .+ A[:,iter]
-        for item in 1:length(temp)
+        temp[:,] = temp .+ A[:,iter] # ERROR: BoundsError: attempt to access 7×9 Matrix{Int64} at index [1:7, 10]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       for item in 1:length(temp)
             if temp[item] > 1
                 temp[:,] = temp .- A[:,iter]
-                individu[iter] = 0
-                ind_score -= C[:,iter]
+                println("individu[iter]: ", individu[iter])
+                individu[iter] .= 0
+                println("individu[iter]: ", individu[iter])
+                println("size C: ", size(C)) 
+                println("C: ", C)
+                println("iter: ", iter)
+                println("C[iter]: ", C[iter])        
+                println("ind_score: ", ind_score)
+                ind_score .- C[iter]            # ind_score -= C[:,iter] # ERROR: BoundsError: attempt to access 9-element Vector{Int64} at index [1:9, 2]
+                println("ind_score: ", ind_score)
                 push!(destructed, iter)
             end
         end
